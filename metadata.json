@@ -1,0 +1,7 @@
+{
+  "name": "SpaceScope",
+  "description": "An interactive, 3D space exploration dashboard featuring real-time celestial tracking, mission timelines, and AI-powered cosmic insights.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
