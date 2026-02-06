@@ -2,6 +2,7 @@ fastapi
 uvicorn[standard]
 httpx
 python-dotenv
-faiss-cpu
+faiss-cpu==1.7.4
 sentence-transformers
 groq
+numpy<2
