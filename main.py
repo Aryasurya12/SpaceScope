@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 from dotenv import load_dotenv
-from rag_engine import ask_rag
+from rag_engine import ask_rag, get_rag_status
 
 # Load variables from environment or .env
 load_dotenv()
@@ -90,6 +90,11 @@ async def get_spacex_vehicle():
             return JSONResponse(content=data)
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+@app.get("/api/health/rag")
+async def get_rag_health():
+    """Returns the current status of the RAG engine."""
+    return get_rag_status()
 
 @app.get("/rag")
 async def rag_endpoint(q: str):
