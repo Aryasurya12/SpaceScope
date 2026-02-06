@@ -6,15 +6,17 @@ import httpx
 from dotenv import load_dotenv
 from rag_engine import ask_rag
 
-# Load variables from .env.local file
-load_dotenv(".env.local")
+# Load variables from environment or .env
+load_dotenv()
 
 app = FastAPI(title="SpaceScope API Gateway")
 
-# Configure CORS so your React frontend can talk to this server
+# Configure CORS origins from environment
+origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In production, replace with your frontend URL
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,5 +1,5 @@
-const BASE_URL = 'http://localhost:8000/api';
-const RAG_URL = 'http://localhost:8000/rag';
+const BASE_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:8000/api';
+const RAG_URL = (import.meta as any).env.VITE_RAG_URL || 'http://localhost:8000/rag';
 
 export interface ISSData {
     timestamp: number;

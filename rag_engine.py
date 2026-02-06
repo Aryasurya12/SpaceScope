@@ -7,8 +7,8 @@ from dotenv import load_dotenv
 
 # Determine the directory of the current script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# Load env vars from .env.local in the base directory
-load_dotenv(os.path.join(BASE_DIR, ".env.local"))
+# Load env vars from .env
+load_dotenv()
 
 # Load embedding model (Runs locally)
 try:
