@@ -1,3 +1,4 @@
+# Deploy Anchor: 1642 IST
 fastapi
 uvicorn[standard]
 httpx
