@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "latest",
+    "@react-three/drei": "latest",
+    "@react-three/fiber": "latest",
+    "@supabase/supabase-js": "latest",
+    "d3": "latest",
+    "framer-motion": "latest",
+    "groq-sdk": "^0.37.0",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "framer-motion": "latest",
-    "d3": "latest",
-    "three": "latest",
-    "@react-three/fiber": "latest",
-    "@react-three/drei": "latest",
-    "@google/genai": "latest",
-    "lucide-react": "latest",
-    "@supabase/supabase-js": "latest"
+    "three": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",

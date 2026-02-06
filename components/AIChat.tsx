@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { sendChatMessage } from '../services/geminiService';
+import { askRagEngine } from '../services/apiService';
 import { ChatMessage } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,6 +19,35 @@ const AIChat: React.FC = () => {
 
     useEffect(scrollToBottom, [messages]);
 
+    // Handle incoming AI queries from other components (like Weather Cards)
+    useEffect(() => {
+        const handleAIQuery = async (e: any) => {
+            const query = e.detail;
+            setIsOpen(true);
+            setMessages(prev => [...prev, { role: 'user', text: query }]);
+            setLoading(true);
+
+            try {
+                const response = await askRagEngine(query);
+                const sourceList = response.sources.length > 0
+                    ? `\n\nSources: ${response.sources.join(', ')}`
+                    : '';
+
+                setMessages(prev => [...prev, {
+                    role: 'model',
+                    text: `${response.answer}${sourceList}`
+                }]);
+            } catch (err) {
+                setMessages(prev => [...prev, { role: 'model', text: "Error connecting to RAG engine." }]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        window.addEventListener('ai-query', handleAIQuery);
+        return () => window.removeEventListener('ai-query', handleAIQuery);
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!input.trim()) return;
@@ -33,10 +63,14 @@ const AIChat: React.FC = () => {
             parts: [{ text: m.text }]
         }));
 
-        const response = await sendChatMessage(userMsg.text, history);
-        
-        setMessages(prev => [...prev, { role: 'model', text: response }]);
-        setLoading(false);
+        try {
+            const response = await sendChatMessage(userMsg.text, history);
+            setMessages(prev => [...prev, { role: 'model', text: response }]);
+        } catch (err) {
+            setMessages(prev => [...prev, { role: 'model', text: "Gemini Core error. Check uplink." }]);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -74,11 +108,10 @@ const AIChat: React.FC = () => {
                         <div className="flex-1 overflow-y-auto p-4 space-y-4">
                             {messages.map((msg, i) => (
                                 <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[80%] p-3 rounded-lg text-sm ${
-                                        msg.role === 'user' 
-                                            ? 'bg-cyan-700/50 text-white rounded-br-none border border-cyan-500/30' 
+                                    <div className={`max-w-[80%] p-3 rounded-lg text-sm ${msg.role === 'user'
+                                            ? 'bg-cyan-700/50 text-white rounded-br-none border border-cyan-500/30'
                                             : 'bg-space-900/80 text-gray-200 rounded-bl-none border border-white/10'
-                                    }`}>
+                                        }`}>
                                         {msg.text}
                                     </div>
                                 </div>

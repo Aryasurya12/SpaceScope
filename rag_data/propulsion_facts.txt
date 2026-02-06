@@ -1,0 +1,6 @@
+Ion propulsion is a type of electric propulsion used for spacecraft propulsion. It creates thrust by accelerating ions using electricity.
+The key advantage of ion propulsion is its high specific impulse (ISP), which represents fuel efficiency. Ion thrusters can have an ISP of over 3000 seconds, compared to ~450 seconds for chemical rockets.
+However, the thrust generated is very low (comparable to the weight of a piece of paper).
+This makes ion engines ideal for long-duration deep space missions where high efficiency is more important than high thrust.
+Examples of missions using ion propulsion include NASA's Dawn spacecraft (which visited Vesta and Ceres) and Deep Space 1.
+The NEXT-C ion thruster is one of NASA's most advanced evolutionary xenon thrusters.
